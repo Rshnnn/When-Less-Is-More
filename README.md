@@ -1,6 +1,6 @@
 <div align="center">
 
-![When Less is More: The LLM Scaling Paradox in Context Compression](docs/assets/paper-header.svg?v=cofibench)
+![When Less is More: The LLM Scaling Paradox in Context Compression](docs/assets/paper-header.svg?v=cofibench-fullname)
 
 <p align="center">
 Ruishan&nbsp;Guo<sup>*</sup>, Yibing&nbsp;Liu<sup>*†</sup>, Guoxin&nbsp;Ma, Yan&nbsp;Wang<br>
@@ -52,7 +52,7 @@ At **64× compression** (Table 3), scaling the LLaMA-family compressor from **3B
 
 ## CoFiBench
 
-A diagnostic dataset for evaluating source fidelity after context compression through knowledge overwriting and semantic drift. It contains **22,894 QA pairs** across two tasks and four subsets.
+**CoFiBench (Compression Fidelity Benchmark)** evaluates source fidelity after context compression through knowledge overwriting and semantic drift. It contains **22,894 QA pairs** across two tasks and four subsets.
 
 | Task | Source | Contexts | QA pairs | Hugging Face configuration |
 |:--|:--|--:|--:|:--|
