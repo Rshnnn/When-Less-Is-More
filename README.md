@@ -2,7 +2,10 @@
 
 ![When Less is More: The LLM Scaling Paradox in Context Compression](docs/assets/paper-header.svg?v=cofibench)
 
-Ruishan Guo*, Yibing Liu*†, Guoxin Ma, Yan Wang, Yueyang Zhang, Long Xia, Kecheng Chen, Zhiyuan Sun, Daiting Shi
+<p align="center">
+Ruishan&nbsp;Guo<sup>*</sup>, Yibing&nbsp;Liu<sup>*†</sup>, Guoxin&nbsp;Ma, Yan&nbsp;Wang<br>
+Yueyang&nbsp;Zhang, Long&nbsp;Xia, Kecheng&nbsp;Chen, Zhiyuan&nbsp;Sun, Daiting&nbsp;Shi
+</p>
 
 Tsinghua University · Baidu Inc., Beijing · Xi’an Jiaotong University · City University of Hong Kong  
 <sub>* Equal contribution. † Corresponding author.</sub>
@@ -30,14 +33,18 @@ Across 27 compressor setups spanning model families, scales, and compression rat
 
 Interestingly, this paradox persists across varied settings, with **mid-sized compressors often outperforming larger ones in faithful recovery**. By analyzing the compressed memory via embedding geometry and reconstruction determinacy, we further reveal that compressors tend to organize memory across broader semantic subspaces, yielding more ambiguous representations prone to overwriting, drift, and weakened recovery. These findings complement existing evaluations of context compression and expose a breakdown of scaling laws when the objective shifts from plausible generation to faithful preservation.
 
-Our CoFiBench dataset, with 22,894 QA pairs for diagnosing knowledge overwriting and semantic drift under context compression, is available at [the project page](https://rshnnn.github.io/When-Less-Is-More/).
-
 ## Main Observations
 
 - **A Size-Fidelity Paradox.** Across 27 compressor configurations (nine model sizes × three compression rates), fidelity is non-monotonic in scale. Mid-sized compressors often preserve the source better than larger models.
 - **Two complementary diagnostics.** Knowledge overwriting tests whether a model preserves a contextual fact despite conflicting prior knowledge. Semantic drift tests precise entities, predicates, discourse relations, coreference, roles, and modifiers.
 - **A view inside compressed memory.** Effective rank probes memory organization; teacher-forced conditional entropy probes reconstruction determinacy. The analyses associate broader or less constraining memory with poorer fidelity, rather than establishing a complete causal explanation.
 - **Beyond one setup.** The paper studies decoder compatibility, cross-domain pretraining, loss weighting, RAG-based QA, and in-context learning.
+
+### Complete results from Table 3
+
+[![Table 3: complete quantitative results across 27 Qwen and LLaMA compressor configurations](docs/assets/main-table.png)](docs/assets/main-table.png)
+
+[View the full-resolution table](docs/assets/main-table.png) · [Download CSV](docs/assets/table3.csv)
 
 ### A concrete contrast
 
