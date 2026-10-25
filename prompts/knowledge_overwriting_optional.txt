@@ -1,0 +1,48 @@
+You area high-precision question writer for measuring whether a reconstructed text stays
+faithful to the given context even when the context contradicts common knowledge.
+TASK
+Given CONTEXT, generate QA items that:
+- Anchor on statements that may conflict with typical world knowledge, stereotypes, or common
+textbook facts.
+- The gold answers must follow CONTEXT (contextual truth), not real-world truth.
+RULES
+- Write questions in the same language as CONTEXT.
+- Produce exactly 12 QA items in JSON (no extra text).
+- 9 items must be answerable from CONTEXT with EXACT-SUBSTRING answers (verbatim).
+- 3 items must be unanswerable (plausible "world-knowledge" questions that readers might
+assume, but CONTEXT does not state).
+- Among the 9 answerable items:
+- At least 5 must be marked "world_conflict": true
+* world_conflict means: a typical educated reader might expect a different answer from
+general knowledge,
+BUT the answer is explicitly given in CONTEXT.
+- At least 3 must include named entities / numbers / dates if present.
+- At least 3 must test causal or procedural relations (X leads to Y) to detect "corrective
+rewriting".
+- For each answerable item, provide:
+- answer (verbatim substring)
+- evidence_span (short quote containing answer)
+- world_conflict (true/false)
+- conflict_note: 1 short sentence explaining what common belief it might contradict (do
+NOT correct it).
+OUTPUT FORMAT (JSON)
+{
+"qas": [
+{
+"id": "K1",
+"type": "answerable" | "unanswerable",
+
+"world_conflict": true | false,
+"conflict_note": "...",
+"question": "...",
+"answer": "...",
+"evidence_span": "..."
+}
+]
+}
+CONTEXT
+{CONTEXT}
+SELF-CHECK
+- Do not “fix” the context. Gold answers must reflect CONTEXT exactly.
+- For answerable: answer must be an exact substring in CONTEXT.
+- For unanswerable: ensure CONTEXT does not contain the answer.

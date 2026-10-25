@@ -1,0 +1,69 @@
+You arean expert dataset writer building a QA suite to detect TOPIC/ENTITY DRIFT after
+compression+reconstruction.
+GOAL
+Generate questions that will fail if the reconstructed text:
+- shifts the main topic, scope or subject,
+- replaces specific entities with generic categories (over-generalization),
+- changes the stated actions or relationships, such as rewriting key verbs/relations in a way
+
+that changes meaning (relationship drift),
+- drops list items or swaps roles/relationships (who did what to whom),
+- breaks cross-sentence relations (cause/effect, contrast, concession, example, and progression
+are weakened, reversed, or rewritten).
+IMPORTANT: We are NOT adding distractor sentences. We want high-coverage,
+high-precision QA over the given CONTEXT.
+HARD RULES
+- Output EXACTLY 20 QA items as JSON only (no extra text).
+- 15 items must be answerable from CONTEXT.
+- For answerable items, the answer MUST be an exact substring from CONTEXT (verbatim,
+case/punctuation preserved).
+- Provide evidence_span: a short quote from CONTEXT that contains the answer verbatim.
+- Answers must be SPECIFIC: do NOT use pronouns-only answers (it/they/this/that/he/she).
+Prefer named entities or concrete noun phrases.
+- 5 items must be unanswerable but plausible and closely related (to detect drift-to-generic or
+invented details).
+- For these, set answer="UNANSWERABLE" and evidence_span="".
+COVERAGE & DIVERSITY REQUIREMENTS (for the 15 answerable)
+- Make sure answers cover the entire context:
+->=4 answers from the first third of CONTEXT,
+->=4 from the middle third,
+->=4 from the last third.
+- Include the following question types (minimum counts):
+1) main_topic (>=1): asks for the central subject/entity or the discussed domain/category.
+2) entity_list (>=2): asks for lists or multiple items mentioned (answer is the exact list span).
+3) predicate_exact (>=1): asks for the EXACT verb/relational phrase used.
+- The gold answer must include the predicate words, not just an entity.
+4) relation_anchor ( >=1): asks about explicit relations: reason, contrast, cause/effect,
+“instead/however”, “to do X, they do Y”.
+- The answer should be the specific clause/phrase that states the relation (short span).
+5) coreference_link (>=2): asks what a pronoun/this/that/these refers to, answered by the
+antecedent noun phrase in CONTEXT.
+6) role_binding (>=2): asks who performs an action or what is affected (forces correct role
+assignment).
+7) modifier_scope (>=2): asks for extracting key modifiers that often get generalized away
+(category qualifiers, degree/adverb, constraints).
+QUALITY CONSTRAINTS
+- Keep each question unambiguous with a single correct answer span.
+- Avoid trivial questions that can be answered by many spans (e.g., “What is mentioned?”).
+- Avoid yes/no questions unless the answer span is a clear “yes/no” phrase in CONTEXT (rare).
+OUTPUT JSON FORMAT
+{
+"qas": [
+{
+"id": "T01",
+"type": "answerable" | "unanswerable",
+"probe": "main_topic" | "entity_list" | "predicate_exact" | "relation_anchor" |
+"coreference_link" | "role_binding" | "modifier_scope",
+"question": "...",
+"answer": "...",
+"evidence_span": "..."
+}
+
+]
+}
+CONTEXT
+{CONTEXT}
+SELF-CHECK (must satisfy before output)
+- For every answerable item: answer string appears exactly in CONTEXT.
+- For every unanswerable item: CONTEXT does not explicitly contain the answer.
+- Ensure all probe-type minimum counts are met.
