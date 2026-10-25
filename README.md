@@ -10,11 +10,9 @@ Ruishan Guo*, Yibing Liu*†, Guoxin Ma, Yan Wang, Yueyang Zhang, Long Xia, Kech
 Tsinghua University · Baidu Inc. · Xi’an Jiaotong University · City University of Hong Kong  
 <sub>* Equal contribution. † Corresponding author.</sub>
 
-[![Paper](https://img.shields.io/badge/Paper-OpenReview-7864AD)](https://openreview.net/forum?id=H9lFJNJ2so)
-[![Project](https://img.shields.io/badge/Project-Website-306D6A)](https://rshnnn.github.io/When-Less-Is-More/)
+[![Paper](https://img.shields.io/badge/Paper-arXiv-7542A8)](https://arxiv.org/pdf/2602.09789)
+[![Project](https://img.shields.io/badge/Project-Website-7542A8)](https://rshnnn.github.io/When-Less-Is-More/)
 [![Dataset](https://img.shields.io/badge/🤗%20Hugging%20Face-22%2C894%20QA%20pairs-E3B341)](https://huggingface.co/datasets/Rshnn/When-Less-Is-More)
-
-**Better reconstruction scores do not always mean better source fidelity.**
 
 </div>
 
@@ -22,11 +20,18 @@ Tsinghua University · Baidu Inc. · Xi’an Jiaotong University · City Univers
 
 *Figure 1 from the paper. Larger compressors can improve surface reconstruction while losing source-specific facts and relations.*
 
+> [!IMPORTANT]
+> **Better reconstruction scores do not always mean better source fidelity.**
+
 ## Abstract
 
-Scaling up model parameters has long been a prevalent training paradigm driven by the assumption that larger models yield superior generation capabilities. However, under lossy context compression in a compressor–decoder setup, we find a Size-Fidelity Paradox: increasing compressor size can lessen the faithfulness of reconstructed contexts though reconstruction error decreases. Across 27 compressor setups spanning model families, scales, and compression rates, we coin this paradox arising from two dominant factors: 1) knowledge overwriting: larger models increasingly replace source facts with their own prior beliefs, e.g., “the white strawberry” → “the red strawberry”; and 2) semantic drift: larger models tend to paraphrase or restructure content instead of reproducing it verbatim, e.g., “Alice hit Bob” → “Bob hit Alice”. Interestingly, this paradox persists across varied settings, with mid-sized compressors often outperforming larger ones in faithful recovery. By analyzing the compressed memory via embedding geometry and reconstruction determinacy, we further reveal that compressors tend to organize memory across broader semantic subspaces, yielding more ambiguous representations prone to overwriting, drift, and weakened recovery. These findings complement existing evaluations of context compression and expose a breakdown of scaling laws when the objective shifts from plausible generation to faithful preservation.
+Scaling up model parameters has long been a prevalent training paradigm driven by the assumption that larger models yield superior generation capabilities. However, under lossy context compression in a compressor–decoder setup, we find a **Size-Fidelity Paradox**: increasing compressor size can lessen the faithfulness of reconstructed contexts though reconstruction error decreases.
 
-## What we find
+Across 27 compressor setups spanning model families, scales, and compression rates, we coin this paradox arising from two dominant factors: 1) **knowledge overwriting**: larger models increasingly replace source facts with their own prior beliefs, e.g., `“the white strawberry” → “the red strawberry”`; and 2) **semantic drift**: larger models tend to paraphrase or restructure content instead of reproducing it verbatim, e.g., `“Alice hit Bob” → “Bob hit Alice”`.
+
+Interestingly, this paradox persists across varied settings, with **mid-sized compressors often outperforming larger ones in faithful recovery**. By analyzing the compressed memory via embedding geometry and reconstruction determinacy, we further reveal that compressors tend to organize memory across broader semantic subspaces, yielding more ambiguous representations prone to overwriting, drift, and weakened recovery. These findings complement existing evaluations of context compression and expose a breakdown of scaling laws when the objective shifts from plausible generation to faithful preservation.
+
+## Main Observations
 
 - **A Size-Fidelity Paradox.** Across 27 compressor configurations (nine model sizes × three compression rates), fidelity is non-monotonic in scale. Mid-sized compressors often preserve the source better than larger models.
 - **Two complementary diagnostics.** Knowledge overwriting tests whether a model preserves a contextual fact despite conflicting prior knowledge. Semantic drift tests precise entities, predicates, discourse relations, coreference, roles, and modifiers.
@@ -234,7 +239,7 @@ We thank the authors of **PCC — Pretraining Context Compressor for Large Langu
                Zhang, Yueyang and Xia, Long and Chen, Kecheng and Sun, Zhiyuan and Shi, Daiting},
   booktitle = {Advances in Neural Information Processing Systems},
   year      = {2026},
-  url       = {https://openreview.net/forum?id=H9lFJNJ2so}
+  url       = {https://arxiv.org/pdf/2602.09789}
 }
 ```
 
