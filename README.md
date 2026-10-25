@@ -1,22 +1,21 @@
 <div align="center">
 
-# When Less is More
-### The LLM Scaling Paradox in Context Compression
-
-**NeurIPS 2026**
+![When Less is More: The LLM Scaling Paradox in Context Compression](docs/assets/paper-header.svg)
 
 Ruishan Guo*, Yibing Liu*†, Guoxin Ma, Yan Wang, Yueyang Zhang, Long Xia, Kecheng Chen, Zhiyuan Sun, Daiting Shi
 
-Tsinghua University · Baidu Inc. · Xi’an Jiaotong University · City University of Hong Kong  
+Tsinghua University · Baidu Inc., Beijing · Xi’an Jiaotong University · City University of Hong Kong  
 <sub>* Equal contribution. † Corresponding author.</sub>
 
 [![Paper](https://img.shields.io/badge/Paper-arXiv-7542A8)](https://arxiv.org/pdf/2602.09789)
 [![Project](https://img.shields.io/badge/Project-Website-7542A8)](https://rshnnn.github.io/When-Less-Is-More/)
-[![Dataset](https://img.shields.io/badge/🤗%20Hugging%20Face-22%2C894%20QA%20pairs-E3B341)](https://huggingface.co/datasets/Rshnn/When-Less-Is-More)
+[![Dataset](https://img.shields.io/badge/🤗%20Hugging%20Face-22%2C894%20QA%20pairs-E3B341)](https://huggingface.co/datasets/Rshnn/ContextFidelity-QA)
 
 </div>
 
-![The Size-Fidelity Paradox](docs/assets/teaser.png)
+[![The Size-Fidelity Paradox](docs/assets/teaser-hd.png)](docs/assets/teaser.pdf)
+
+<p align="center"><a href="docs/assets/teaser.pdf">Vector PDF</a> &nbsp;·&nbsp; <a href="docs/assets/teaser-hd.png">High-resolution PNG</a></p>
 
 *Figure 1 from the paper. Larger compressors can improve surface reconstruction while losing source-specific facts and relations.*
 
@@ -31,6 +30,8 @@ Across 27 compressor setups spanning model families, scales, and compression rat
 
 Interestingly, this paradox persists across varied settings, with **mid-sized compressors often outperforming larger ones in faithful recovery**. By analyzing the compressed memory via embedding geometry and reconstruction determinacy, we further reveal that compressors tend to organize memory across broader semantic subspaces, yielding more ambiguous representations prone to overwriting, drift, and weakened recovery. These findings complement existing evaluations of context compression and expose a breakdown of scaling laws when the objective shifts from plausible generation to faithful preservation.
 
+Our ContextFidelity-QA dataset, with 22,894 QA pairs for diagnosing knowledge overwriting and semantic drift under context compression, is available at [the project page](https://rshnnn.github.io/When-Less-Is-More/).
+
 ## Main Observations
 
 - **A Size-Fidelity Paradox.** Across 27 compressor configurations (nine model sizes × three compression rates), fidelity is non-monotonic in scale. Mid-sized compressors often preserve the source better than larger models.
@@ -42,7 +43,9 @@ Interestingly, this paradox persists across varied settings, with **mid-sized co
 
 At **64× compression** (Table 3), scaling the LLaMA-family compressor from **3B to 90B** changes BLEU from **0.29 → 0.33**, but knowledge-overwriting QA from **0.62 → 0.53**, and semantic-drift QA from **0.41 → 0.28**. QA values are the paper's category averages; higher is better.
 
-## Diagnostic datasets
+## ContextFidelity-QA
+
+A diagnostic dataset for evaluating source fidelity after context compression through knowledge overwriting and semantic drift. It contains **22,894 QA pairs** across two tasks and four subsets.
 
 | Task | Source | Contexts | QA pairs | Hugging Face configuration |
 |:--|:--|--:|--:|:--|
@@ -57,13 +60,13 @@ FaithEval contexts occur in both task families, so the total is not a count of d
 ```python
 from datasets import load_dataset
 
-ds = load_dataset("Rshnn/When-Less-Is-More", "semantic_drift_fineweb", split="test")
+ds = load_dataset("Rshnn/ContextFidelity-QA", "semantic_drift_fineweb", split="test")
 print(ds[0]["question"], ds[0]["answer"])
 ```
 
 Each subset is an evaluation `test` split. The split name describes its role; no new train/test partition was created. The four subsets have task-specific schemas.
 
-[Dataset card and downloads](https://huggingface.co/datasets/Rshnn/When-Less-Is-More) · [Field definitions and integrity notes](https://huggingface.co/datasets/Rshnn/When-Less-Is-More/blob/main/DATA_GUIDE.md) · [Original submitted JSON archive](https://huggingface.co/datasets/Rshnn/When-Less-Is-More/resolve/main/original/supplementary_original.zip?download=true)
+[Dataset card and downloads](https://huggingface.co/datasets/Rshnn/ContextFidelity-QA) · [Field definitions and integrity notes](https://huggingface.co/datasets/Rshnn/ContextFidelity-QA/blob/main/DATA_GUIDE.md) · [Original submitted JSON archive](https://huggingface.co/datasets/Rshnn/ContextFidelity-QA/resolve/main/original/supplementary_original.zip?download=true)
 
 > **ConflictQA field semantics:** `contextual_answer` is copied from the original singleton `choices[0]` (`True` / `False`). The original `answer` is preserved as `parametric_answer`; do not use it as the context-grounded gold label.
 
